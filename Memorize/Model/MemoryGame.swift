@@ -10,7 +10,7 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
   
-  var cards: Array<Card>
+  var cards: Array<Card> = []
   
   var indexOfTheOneAndOnlyFaceUpCard: Int? {
     get { cards.indices.filter { cards[$0].isFaceUp }.only }
@@ -29,13 +29,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
   }
   
   init(cardsContent: [CardContent]) {
-    cards = Array<Card>()
-    
-    for content in cardsContent {
-      cards.append(Card(id: UUID().uuidString ,content: content))
-      cards.append(Card(id: UUID().uuidString ,content: content))
-    }
-    self.cards.shuffle()
+    newGame(cardsContent: cardsContent)
   }
   
   
@@ -57,5 +51,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         indexOfTheOneAndOnlyFaceUpCard = chosenIndex
       }
     }
+  }
+
+  mutating func newGame(cardsContent: [CardContent]) {
+    cards = Array<Card>()
+    for content in cardsContent {
+      cards.append(Card(id: UUID().uuidString ,content: content))
+      cards.append(Card(id: UUID().uuidString ,content: content))
+    }
+    cards.shuffle()
   }
 }

@@ -23,12 +23,12 @@ struct EmojiMemoryGameView: View {
         CardView(card: card, color: game.color).onTapGesture {
           game.choose(card: card)
         }
-        .padding()
+        .padding(5)
       }
       Button("New Game") {
         print("New Game")
         let gameTheme = GameTheme(themeName: .animals, numberOfPairsOfCards: 5)
-        self.game.gameTheme = gameTheme
+        game.newGame(gameTheme: gameTheme)
       }
       .padding()
       .border(game.color, width: borderButtonWidth)

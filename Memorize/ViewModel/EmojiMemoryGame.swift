@@ -36,4 +36,8 @@ class EmojiMemoryGame: ObservableObject {
   func choose(card: MemoryGame<String>.Card) {
     memoryGame.choose(card: card)
   }
+
+  func newGame(gameTheme: GameTheme) {
+    memoryGame.newGame(cardsContent: gameTheme.emojis)
+  }
 }
