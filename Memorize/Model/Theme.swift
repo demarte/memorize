@@ -1,5 +1,5 @@
 //
-//  GameTheme.swift
+//  Theme.swift
 //  Memorize
 //
 //  Created by Ivan on 01/06/20.
@@ -8,19 +8,22 @@
 
 import SwiftUI
 
-struct Theme {
-  let themeName: ThemeName
-  let numberOfPairsOfCards: Int?
+struct Theme: Identifiable {
+  let id: String
+  let name: Name
+  var numberOfPairsOfCards: Int?
   
   var emojis: [String] {
-    let emojis = self.emojis(for: themeName)
-    let numberOfPairsOfCards = self.numberOfPairsOfCards ?? Int.random(in: minimumNumberOfPairsOfCards..<emojis.count)
-    let sliceArray = emojis.prefix(numberOfPairsOfCards)
-    return Array<String>(sliceArray)
+    let emojis = self.emojis(for: name)
+    if let numberOfPairs = self.numberOfPairsOfCards {
+      let sliceArray = emojis.prefix(numberOfPairs)
+      return Array<String>(sliceArray)
+    }
+    return emojis
   }
   
-  var themeColor: Color {
-    switch themeName {
+  var color: Color {
+    switch name {
     case .haloween:
       return Color.orange
     case .animals:
@@ -36,12 +39,23 @@ struct Theme {
     }
   }
   
-  init(themeName: ThemeName, numberOfPairsOfCards: Int? = nil) {
-    self.themeName = themeName
-    self.numberOfPairsOfCards = numberOfPairsOfCards
+  init(themeName: Name, numberOfPairsOfCards: Int? = nil) {
+    self.id = UUID().uuidString
+    self.name = themeName
+    setUpNumberOfPairsOfCards(numberOfPairsOfCards)
   }
   
-  private func emojis(for theme: ThemeName) -> [String] {
+  private mutating func setUpNumberOfPairsOfCards(_ numberOfPairs: Int?) {
+    if numberOfPairs == nil {
+      let emojis = self.emojis(for: name)
+      let randomNumberOfCards = Int.random(in: minimumNumberOfPairsOfCards..<emojis.count)
+      self.numberOfPairsOfCards = randomNumberOfCards
+    } else {
+      self.numberOfPairsOfCards = numberOfPairs
+    }
+  }
+  
+  private func emojis(for theme: Name) -> [String] {
     switch theme {
     case .haloween:
       return ["👻","🕷","🎃","🕸","🦇","🧛🏻‍♂️","🧟‍♂️"]
@@ -58,7 +72,7 @@ struct Theme {
     }
   }
   
-  enum ThemeName: String, CaseIterable {
+  enum Name: String, CaseIterable {
     case haloween = "Haloween"
     case sports = "Sports"
     case faces = "Faces"
@@ -69,7 +83,7 @@ struct Theme {
   
   // MARK: - Constants -
   
-  let minimumNumberOfPairsOfCards = 5
+  private let minimumNumberOfPairsOfCards = 5
 }
 
 

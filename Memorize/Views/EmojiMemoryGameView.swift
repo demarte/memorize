@@ -18,32 +18,34 @@ struct EmojiMemoryGameView: View {
   
   private func body(for game: EmojiMemoryGame) -> some View {
     VStack {
-      Text(game.themeName)
       Grid(game.cards) { card in
         CardView(card: card, color: game.color).onTapGesture {
           game.choose(card: card)
         }
         .padding(5)
       }
-      Button("New Game") {
-        print("New Game")
-        let gameTheme = GameTheme(themeName: .animals, numberOfPairsOfCards: 5)
-        game.newGame(gameTheme: gameTheme)
-      }
-      .padding()
-      .border(game.color, width: borderButtonWidth)
+      Text("Score: \(game.score)")
+        .font(Font.title)
+        .padding()
+      
     }
     .foregroundColor(game.color)
     .padding()
+    .navigationBarTitle(game.themeName)
+    .navigationBarItems(trailing:
+      Button("New Game") {
+        game.newGame()
+      }
+    )
   }
   
   // MARK: - Constants -
   
-  let borderButtonWidth: CGFloat = 2.0
+  private let borderButtonWidth: CGFloat = 2.0
 }
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    EmojiMemoryGameView(game: EmojiMemoryGame(gameTheme: GameTheme(themeName: .fastFood, numberOfPairsOfCards: 5)))
+    EmojiMemoryGameView(game: EmojiMemoryGame(theme: Theme(themeName: .fastFood, numberOfPairsOfCards: 5)))
   }
 }

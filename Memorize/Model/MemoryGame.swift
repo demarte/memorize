@@ -10,17 +10,6 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
   
-  var cards: Array<Card> = []
-  
-  var indexOfTheOneAndOnlyFaceUpCard: Int? {
-    get { cards.indices.filter { cards[$0].isFaceUp }.only }
-    set {
-      for index in cards.indices {
-        cards[index].isFaceUp = index == newValue
-      }
-    }
-  }
-  
   struct Card: Identifiable {
     let id: String
     var isFaceUp = false
@@ -28,8 +17,31 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     let content: CardContent
   }
   
+  private(set) var cards: Array<Card> = []
+  private(set) var score = 0
+  private var seenCardsIndicies: Set<Int> = []
+  
+  private var indexOfTheOneAndOnlyFaceUpCard: Int? {
+    get { cards.indices.filter { cards[$0].isFaceUp }.only }
+    set {
+      for index in cards.indices {
+        if cards[index].isFaceUp {
+          seenCardsIndicies.insert(index)
+        }
+        cards[index].isFaceUp = index == newValue
+      }
+    }
+  }
+  
   init(cardsContent: [CardContent]) {
-    newGame(cardsContent: cardsContent)
+    cards = Array<Card>()
+    seenCardsIndicies = Set<Int>()
+    score = 0
+    for content in cardsContent {
+      cards.append(Card(id: UUID().uuidString ,content: content))
+      cards.append(Card(id: UUID().uuidString ,content: content))
+    }
+    cards.shuffle()
   }
   
   
@@ -43,22 +55,21 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
       
       if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
         if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+          score += 2
           cards[chosenIndex].isMatch = true
           cards[potentialMatchIndex].isMatch = true
+        } else {
+          if seenCardsIndicies.contains(chosenIndex) {
+            score -= 1
+          }
+          if seenCardsIndicies.contains(potentialMatchIndex) {
+            score -= 1
+          }
         }
-        self.cards[chosenIndex].isFaceUp = true
+        cards[chosenIndex].isFaceUp = true
       } else {
         indexOfTheOneAndOnlyFaceUpCard = chosenIndex
       }
     }
-  }
-
-  mutating func newGame(cardsContent: [CardContent]) {
-    cards = Array<Card>()
-    for content in cardsContent {
-      cards.append(Card(id: UUID().uuidString ,content: content))
-      cards.append(Card(id: UUID().uuidString ,content: content))
-    }
-    cards.shuffle()
   }
 }

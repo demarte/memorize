@@ -31,13 +31,12 @@ struct CardView: View {
         }
       }
     }
-//    .aspectRatio(2/3, contentMode: .fit)
     .font(Font.system(size: fontSize(for: size)))
   }
   
   // MARK: - Drawing Constants -
-  let cornerRadius: CGFloat = 10.0
-  let edgeLineWidth: CGFloat = 3
+  private let cornerRadius: CGFloat = 10.0
+  private let edgeLineWidth: CGFloat = 3
   
   private func fontSize(for size: CGSize) -> CGFloat {
     min(size.width, size.height) * 0.75
@@ -48,7 +47,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
   static var previews: some View {
     
-    let game = EmojiMemoryGame(gameTheme: GameTheme(themeName: .sports, numberOfPairsOfCards: 5))
+    let game = EmojiMemoryGame(theme: Theme(themeName: .sports, numberOfPairsOfCards: 5))
     return CardView(card: game.cards[0], color: game.color)
   }
 }

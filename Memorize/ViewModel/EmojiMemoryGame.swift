@@ -10,13 +10,13 @@ import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
   
-  var gameTheme: GameTheme
+  private let theme: Theme
   // MARK: - Model -
   @Published private var memoryGame: MemoryGame<String>
   
-  init(gameTheme: GameTheme) {
-    self.gameTheme = gameTheme
-    self.memoryGame = MemoryGame<String>(cardsContent: gameTheme.emojis)
+  init(theme: Theme) {
+    self.theme = theme
+    self.memoryGame = MemoryGame<String>(cardsContent: theme.emojis)
   }
   
   // MARK: - Access to the Model -
@@ -26,18 +26,22 @@ class EmojiMemoryGame: ObservableObject {
   }
   
   var color: Color {
-    gameTheme.themeColor
+    theme.color
   }
   
   var themeName: String {
-    gameTheme.themeName.rawValue
+    theme.name.rawValue
+  }
+  
+  var score: Int {
+    memoryGame.score
   }
   
   func choose(card: MemoryGame<String>.Card) {
     memoryGame.choose(card: card)
   }
 
-  func newGame(gameTheme: GameTheme) {
-    memoryGame.newGame(cardsContent: gameTheme.emojis)
+  func newGame() {
+    memoryGame = MemoryGame<String>(cardsContent: theme.emojis)
   }
 }
