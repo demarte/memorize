@@ -19,29 +19,33 @@ struct EmojiMemoryGameView: View {
   private func body(for game: EmojiMemoryGame) -> some View {
     VStack {
       Grid(game.cards) { card in
-        CardView(card: card, color: game.color).onTapGesture {
-          game.choose(card: card)
+        CardView(card: card).onTapGesture {
+          withAnimation(.linear(duration: self.flipCardDuration)) {
+            game.choose(card: card)
+          }
         }
-        .padding(5)
+        .padding(self.cardPadding)
       }
       Text("Score: \(game.score)")
         .font(Font.title)
         .padding()
-      
     }
     .foregroundColor(game.color)
     .padding()
     .navigationBarTitle(game.themeName)
     .navigationBarItems(trailing:
       Button("New Game") {
-        game.newGame()
+        withAnimation(.easeInOut) {
+          game.newGame()
+        }
       }
     )
   }
-  
+
   // MARK: - Constants -
-  
-  private let borderButtonWidth: CGFloat = 2.0
+
+  let flipCardDuration: Double = 0.75
+  let cardPadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 }
 
 struct ContentView_Previews: PreviewProvider {
