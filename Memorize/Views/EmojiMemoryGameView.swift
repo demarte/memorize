@@ -44,8 +44,8 @@ struct EmojiMemoryGameView: View {
 
   // MARK: - Constants -
 
-  let flipCardDuration: Double = 0.75
-  let cardPadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+  private let flipCardDuration: Double = 0.75
+  private let cardPadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 }
 
 struct ContentView_Previews: PreviewProvider {

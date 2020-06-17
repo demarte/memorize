@@ -67,11 +67,11 @@ struct CardView: View {
 
   // MARK: - Drawing Constants -
 
-  let pieOpacity: Double = 0.4
-  let piePadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-  let rotationAngle: Double = 90
-  let defaultPositionAngle: Double = 0
-  let rotatedPositionAngle: Double = 360
+  private let pieOpacity: Double = 0.4
+  private let piePadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+  private let rotationAngle: Double = 90
+  private let defaultPositionAngle: Double = 0
+  private let rotatedPositionAngle: Double = 360
 
   private func fontSize(for size: CGSize) -> CGFloat {
     min(size.width, size.height) * 0.7
