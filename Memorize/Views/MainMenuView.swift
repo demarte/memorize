@@ -16,7 +16,7 @@ struct MainMenuView: View {
     self.themes = []
     let themeNames = Theme.Name.allCases
     for name in themeNames {
-      self.themes.append(Theme(themeName: name, numberOfPairsOfCards: nil))
+      self.themes.append(Theme(themeName: name))
     }
   }
   

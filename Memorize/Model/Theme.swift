@@ -42,16 +42,14 @@ struct Theme: Identifiable {
   init(themeName: Name, numberOfPairsOfCards: Int? = nil) {
     self.id = UUID().uuidString
     self.name = themeName
-    setUpNumberOfPairsOfCards(numberOfPairsOfCards)
+    setUpNumberOfPairsOfCards()
   }
   
-  private mutating func setUpNumberOfPairsOfCards(_ numberOfPairs: Int?) {
-    if numberOfPairs == nil {
+  private mutating func setUpNumberOfPairsOfCards() {
+    if numberOfPairsOfCards == nil {
       let emojis = self.emojis(for: name)
       let randomNumberOfCards = Int.random(in: minimumNumberOfPairsOfCards..<emojis.count)
       self.numberOfPairsOfCards = randomNumberOfCards
-    } else {
-      self.numberOfPairsOfCards = numberOfPairs
     }
   }
   

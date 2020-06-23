@@ -48,7 +48,7 @@ struct EmojiMemoryGameView: View {
   private let cardPadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct EmojiMemoryGameView_Previews: PreviewProvider {
   static var previews: some View {
     EmojiMemoryGameView(game: EmojiMemoryGame(theme: Theme(themeName: .fastFood, numberOfPairsOfCards: 5)))
   }
