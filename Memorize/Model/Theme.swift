@@ -42,6 +42,7 @@ struct Theme: Identifiable {
   init(themeName: Name, numberOfPairsOfCards: Int? = nil) {
     self.id = UUID().uuidString
     self.name = themeName
+    self.numberOfPairsOfCards = numberOfPairsOfCards
     setUpNumberOfPairsOfCards()
   }
   
