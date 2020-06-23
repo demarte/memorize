@@ -14,6 +14,9 @@ struct EmojiMemoryGameView: View {
   
   var body: some View {
     body(for: self.game)
+      .onAppear {
+        self.game.printJson()
+    }
   }
   
   private func body(for game: EmojiMemoryGame) -> some View {
@@ -41,15 +44,22 @@ struct EmojiMemoryGameView: View {
       }
     )
   }
-
+  
   // MARK: - Constants -
-
+  
   private let flipCardDuration: Double = 0.75
   private let cardPadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 }
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
   static var previews: some View {
-    EmojiMemoryGameView(game: EmojiMemoryGame(theme: Theme(themeName: .fastFood, numberOfPairsOfCards: 5)))
+    EmojiMemoryGameView(game: EmojiMemoryGame(
+      theme: Theme(
+        themeName: "Fast Food",
+        emojis: ["🍦","🍝","🍕","🍗","🍮","🍫","🍿","🍩","🍪","🥪","🧀","🥨"],
+        color: UIColor.RGB(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+        numberOfPairsOfCards: 5)
+      )
+    )
   }
 }

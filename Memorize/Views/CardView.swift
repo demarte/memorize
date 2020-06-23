@@ -11,22 +11,22 @@ import SwiftUI
 struct CardView: View {
   
   var card: MemoryGame<String>.Card
-
+  
   @State private var animatedBonusRemaining: Double = 0
-
+  
   var body: some View {
     GeometryReader { geometry in
       self.body(for: geometry.size)
     }
   }
-
+  
   private func startBonusTimeAnimation() {
     animatedBonusRemaining = card.bonusRemaining
     withAnimation(.linear(duration: card.bonusTimeRemaining)) {
       animatedBonusRemaining = 0
     }
   }
-
+  
   @ViewBuilder
   private func body(for size: CGSize) -> some View {
     if card.isFaceUp || !card.isMatched {
@@ -38,8 +38,8 @@ struct CardView: View {
               endAngle: Angle.degrees(-animatedBonusRemaining * rotatedPositionAngle - rotationAngle),
               clockwise: true
             )
-            .onAppear {
-              self.startBonusTimeAnimation()
+              .onAppear {
+                self.startBonusTimeAnimation()
             }
           } else {
             Pie(
@@ -64,15 +64,15 @@ struct CardView: View {
       .transition(AnyTransition.scale)
     }
   }
-
+  
   // MARK: - Drawing Constants -
-
+  
   private let pieOpacity: Double = 0.4
   private let piePadding = EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
   private let rotationAngle: Double = 90
   private let defaultPositionAngle: Double = 0
   private let rotatedPositionAngle: Double = 360
-
+  
   private func fontSize(for size: CGSize) -> CGFloat {
     min(size.width, size.height) * 0.7
   }
@@ -82,7 +82,13 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
   static var previews: some View {
     
-    let game = EmojiMemoryGame(theme: Theme(themeName: .sports, numberOfPairsOfCards: 5))
+    let game = EmojiMemoryGame(
+      theme: Theme(
+        themeName: "Fast Food",
+        emojis: ["🍦","🍝","🍕","🍗","🍮","🍫","🍿","🍩","🍪","🥪","🧀","🥨"],
+        color: UIColor.RGB(red: 0.5, green: 0.5, blue: 0.5, alpha: 1),
+        numberOfPairsOfCards: 5)
+    )
     return CardView(card: game.cards[0])
   }
 }

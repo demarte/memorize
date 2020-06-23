@@ -10,20 +10,10 @@ import SwiftUI
 
 struct MainMenuView: View {
   
-  var themes: Array<Theme>
-  
-  init() {
-    self.themes = []
-    let themeNames = Theme.Name.allCases
-    for name in themeNames {
-      self.themes.append(Theme(themeName: name))
-    }
-  }
-  
   var body: some View {
     NavigationView {
       VStack(alignment: .leading) {
-        List(themes) { theme in
+        List(Theme.mockData) { theme in
           NavigationLink(destination: EmojiMemoryGameView(game: EmojiMemoryGame(theme: theme))) {
             ThemeRow(theme: theme)
           }
@@ -40,12 +30,12 @@ struct ThemeRow: View {
   
   var body: some View {
     VStack(alignment: .leading){
-      Text(theme.name.rawValue)
+      Text(theme.name)
         .font(Font.title)
-        .foregroundColor(theme.color)
+        .foregroundColor(Color(theme.color))
       HStack {
-        ForEach(0..<self.theme.emojis.count) { index in
-          Text(self.theme.emojis[index])
+        ForEach(theme.emojisToChoose, id: \.self) { emoji in
+          Text(emoji)
         }
       }
     }

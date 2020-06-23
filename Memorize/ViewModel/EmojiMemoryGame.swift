@@ -16,21 +16,25 @@ class EmojiMemoryGame: ObservableObject {
   
   init(theme: Theme) {
     self.theme = theme
-    self.memoryGame = MemoryGame<String>(cardsContent: theme.emojis)
+    self.memoryGame = MemoryGame<String>(cardsContent: theme.emojisToChoose)
   }
   
   // MARK: - Access to the Model -
+  
+  func printJson() {
+    print(theme.json?.utf8 ?? "cannot print json")
+  }
   
   var cards: Array<MemoryGame<String>.Card> {
     memoryGame.cards
   }
   
   var color: Color {
-    theme.color
+    Color(theme.color)
   }
   
   var themeName: String {
-    theme.name.rawValue
+    theme.name
   }
   
   var score: Int {
