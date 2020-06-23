@@ -51,15 +51,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
           cards[chosenIndex].isMatched = true
           cards[potentialMatchIndex].isMatched = true
           if cards[chosenIndex].hasEarnedBonus || cards[potentialMatchIndex].hasEarnedBonus {
-            score += 3
+            let maxBonusTime = max(cards[chosenIndex].bonusTimeRemaining, cards[potentialMatchIndex].bonusTimeRemaining)
+            score += max(10 - Int(maxBonusTime), 1)
           } else {
-            score += 2
+            score += 1
           }
         } else {
-          if seenCardsIndicies.contains(chosenIndex) {
-            score -= 1
-          }
-          if seenCardsIndicies.contains(potentialMatchIndex) {
+          if seenCardsIndicies.contains(chosenIndex) || seenCardsIndicies.contains(potentialMatchIndex) {
             score -= 1
           }
         }
