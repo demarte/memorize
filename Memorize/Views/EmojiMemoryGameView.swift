@@ -14,9 +14,6 @@ struct EmojiMemoryGameView: View {
   
   var body: some View {
     body(for: self.game)
-      .onAppear {
-        self.game.printJson()
-    }
   }
   
   private func body(for game: EmojiMemoryGame) -> some View {
@@ -35,7 +32,6 @@ struct EmojiMemoryGameView: View {
     }
     .foregroundColor(game.color)
     .padding()
-    .navigationBarTitle(game.themeName)
     .navigationBarItems(trailing:
       Button("New Game") {
         withAnimation(.easeInOut) {

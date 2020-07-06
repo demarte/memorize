@@ -21,10 +21,6 @@ class EmojiMemoryGame: ObservableObject {
   
   // MARK: - Access to the Model -
   
-  func printJson() {
-    print(theme.json?.utf8 ?? "cannot print json")
-  }
-  
   var cards: Array<MemoryGame<String>.Card> {
     memoryGame.cards
   }
@@ -46,6 +42,6 @@ class EmojiMemoryGame: ObservableObject {
   }
 
   func newGame() {
-    memoryGame = MemoryGame<String>(cardsContent: theme.emojis)
+    memoryGame = MemoryGame<String>(cardsContent: theme.emojisToChoose)
   }
 }

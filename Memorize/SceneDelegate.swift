@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // Create the SwiftUI view that provides the window contents.
     
-    let mainMenu = MainMenuView()
+    let store = EmojiMemoryThemeStore()
+    let mainMenu = ThemeChooserView(store: store)
     
     // Use a UIHostingController as window root view controller.
     if let windowScene = scene as? UIWindowScene {
